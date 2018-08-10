@@ -9,5 +9,5 @@ entries:
     name: passbolt
     urls:
     - https://gree-gorey.github.io/passbolt/passbolt-2.1.0-debian.tgz
-    version: 2.1.0-debian
+    version: 2.1.0
 generated: 2018-08-10T12:25:28.263652923+02:00
