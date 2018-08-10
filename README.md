@@ -1,7 +1,7 @@
-# passbolt
+# Passbolt Helm chart for Kubernetes
 Helm package for Passbolt project https://www.passbolt.com
 
-## Install
+## Installation
 
 ### 1. Using repo package
 Add this helm repo:
@@ -23,3 +23,17 @@ Install passbolt:
 ```console
 helm install ./passbolt --name=my-passbolt-release
 ```
+
+## Configuration
+
+The following table lists the configurable parameters of the Passbolt chart and their default values.
+
+Parameter | Description | Default
+--------- | ----------- | -------
+`passbolt.persistence.size` | size of volume for `passbolt` pod | `5Gi`
+`passbolt.ingress.host` | domain name for ingress resource | `example.com`
+`mysql.persistence.size` | size of volume for `mysql` pod | `5Gi`
+`mysql.rootPassword` | root password for `mysql`, plain | `secret`
+`mysql.userPassword` | user password for `mysql`, plain | `secret`
+
+See all available values in [values.yaml](https://github.com/gree-gorey/passbolt/blob/master/values.yaml)
