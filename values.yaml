@@ -1,0 +1,58 @@
+passbolt:
+  replicaCount: 1
+  image: passbolt/passbolt
+  imageTag: 2.1.0-debian
+  imagePullPolicy: IfNotPresent
+  resources:
+    limits:
+      memory: 1Gi
+      cpu: 300m
+    requests:
+      memory: 256Mi
+      cpu: 50m
+  ports:
+    http: 80
+    https: 443
+  persistence:
+    storageClassName: standard
+    accessModes:
+      - ReadWriteOnce
+    size: 5Gi
+  ingress:
+    # change this to your domain
+    host: example.com
+    annotations:
+      kubernetes.io/ingress.class: traefik
+
+mysql:
+  image: mysql
+  imageTag: 5.7.21
+  imagePullPolicy: IfNotPresent
+  ports:
+    mysql: 3306
+  resources:
+    limits:
+      memory: 1Gi
+      cpu: 300m
+    requests:
+      memory: 256Mi
+      cpu: 50m
+  readinessProbe:
+    exec:
+      command: ["/probes/ready.sh"]
+    initialDelaySeconds: 30
+    periodSeconds: 5
+  livenessProbe:
+    exec:
+      command: ["/probes/live.sh"]
+    initialDelaySeconds: 60
+    periodSeconds: 10
+    timeoutSeconds: 10
+  persistence:
+    storageClassName: standard
+    accessModes:
+      - ReadWriteOnce
+    size: 5Gi
+  # change this for your values
+  rootPassword: secret
+  userPassword: secret

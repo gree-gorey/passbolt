@@ -1,0 +1,79 @@
+apiVersion: "apps/v1beta1"
+kind: StatefulSet
+metadata:
+  name: mysql
+  labels:
+    app: mysql
+    chart: {{ template "app.chart" . }}
+    release: {{ .Release.Name }}
+    heritage: {{ .Release.Service }}
+spec:
+  serviceName: mysql
+  replicas: 1
+  selector:
+    matchLabels:
+      app: mysql
+      release: {{ .Release.Name }}
+  template:
+    metadata:
+      labels:
+        app: mysql
+        release: {{ .Release.Name }}
+    spec:
+      containers:
+      - image: {{ .Values.mysql.image }}:{{ .Values.mysql.imageTag }}
+        imagePullPolicy: {{ .Values.mysql.imagePullPolicy }}
+        name: mysql
+        env:
+        - name: MYSQL_DATABASE
+          value: passbolt
+        - name: MYSQL_USER
+          value: passbolt
+        - name: MYSQL_ROOT_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: mysql
+              key: rootPassword
+        - name: MYSQL_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: mysql
+              key: userPassword
+        ports:
+        - containerPort: {{ .Values.mysql.ports.mysql }}
+          name: mysql
+          protocol: TCP
+        readinessProbe:
+{{ toYaml .Values.mysql.readinessProbe | indent 10 }}
+        livenessProbe:
+{{ toYaml .Values.mysql.livenessProbe | indent 10 }}
+        volumeMounts:
+        - name: data
+          mountPath: /var/lib/mysql
+        - name: config
+          mountPath: /etc/mysql/my.cnf
+          subPath: my.cnf
+        - name: probes
+          mountPath: /probes
+        resources:
+{{ toYaml .Values.mysql.resources | indent 10 }}
+      volumes:
+      - name: probes
+        configMap:
+          defaultMode: 484
+          name: mysql-probes
+      - name: config
+        configMap:
+          name: mysql
+  volumeClaimTemplates:
+  - metadata:
+      name: data
+    spec:
+      accessModes:
+        {{- range .Values.mysql.persistence.accessModes }}
+        - {{ . | quote }}
+        {{- end }}
+      resources:
+        requests:
+          storage: {{ .Values.mysql.persistence.size | quote }}
+      storageClassName: {{ .Values.mysql.persistence.storageClassName }}

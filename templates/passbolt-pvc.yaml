@@ -1,0 +1,20 @@
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: data-{{ template "app.name" . }}
+  labels:
+    app: {{ template "app.name" . }}
+    chart: {{ template "app.chart" . }}
+    release: {{ .Release.Name }}
+    heritage: {{ .Release.Service }}
+  annotations:
+    volume.beta.kubernetes.io/storage-class: {{ .Values.passbolt.persistence.storageClassName }}
+spec:
+  accessModes:
+    {{- range .Values.passbolt.persistence.accessModes }}
+    - {{ . | quote }}
+    {{- end }}
+  resources:
+    requests:
+      storage: {{ .Values.passbolt.persistence.size | quote }}
+  storageClassName: {{ .Values.passbolt.persistence.storageClassName }}

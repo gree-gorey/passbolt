@@ -1,0 +1,19 @@
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  annotations:
+{{ toYaml .Values.passbolt.ingress.annotations | indent 4 }}
+  labels:
+    app: {{ template "app.name" . }}
+    chart: {{ template "app.chart" . }}
+    release: {{ .Release.Name }}
+    heritage: {{ .Release.Service }}
+  name: {{ template "app.name" . }}
+spec:
+  rules:
+  - host: {{ .Values.passbolt.ingress.host }}
+    http:
+      paths:
+      - backend:
+          serviceName: {{ template "app.name" . }}
+          servicePort: 80
