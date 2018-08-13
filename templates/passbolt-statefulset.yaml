@@ -20,6 +20,8 @@ spec:
         app: {{ template "app.name" . }}
         release: {{ .Release.Name }}
     spec:
+      securityContext:
+        fsGroup: 33
       initContainers:
       # copy default img folder's files to a volume
       - name: copy-default-img
@@ -28,17 +30,14 @@ spec:
         volumeMounts:
         - name: data
           mountPath: /data
-      # set permissions for www-data user
-      - name: volume-chown
-        image: busybox
-        command: ["sh", "-c", "chown -R 33:33 /data"]
-        volumeMounts:
-        - name: data
-          mountPath: /data
       containers:
       - image: {{ .Values.passbolt.image }}:{{ .Values.passbolt.imageTag }}
         imagePullPolicy: {{ .Values.passbolt.imagePullPolicy }}
         name: {{ template "app.name" . }}
+        lifecycle:
+          postStart:
+            exec:
+              command: ["/bin/sh", "-c", "chown -R 33:33 /var/www/passbolt"]
         env:
         - name: DATASOURCES_DEFAULT_HOST
           value: mysql
