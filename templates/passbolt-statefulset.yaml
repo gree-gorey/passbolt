@@ -67,12 +67,12 @@ spec:
         - mountPath: /var/www/passbolt/config/gpg
           name: data
           subPath: gpg
-        - mountPath: /etc/ssl/certs/certiticate.crt
+        - mountPath: /etc/ssl/certs/certificate.crt
           name: data
-          subPath: certiticate.crt
-        - mountPath: /etc/ssl/certs/certiticate.key
+          subPath: certificate.crt
+        - mountPath: /etc/ssl/certs/certificate.key
           name: data
-          subPath: certiticate.key
+          subPath: certificate.key
         resources:
 {{ toYaml .Values.passbolt.resources | indent 10 }}
   volumeClaimTemplates:
