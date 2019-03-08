@@ -2,12 +2,12 @@ apiVersion: v1
 entries:
   passbolt:
   - apiVersion: v1
-    appVersion: "1.0"
+    appVersion: "2.1.0-debian"
     created: 2018-08-10T12:25:28.265241249+02:00
     description: Passbolt chart with StatefulSet
     digest: 3a9c70c3187ac9d652bdf861eb9f97e9e2fd9f87e7911ecca8b287ebeb57b7e6
     name: passbolt
     urls:
-    - https://gree-gorey.github.io/passbolt/passbolt-2.1.0-debian.tgz
-    version: 2.1.0
+    - https://gree-gorey.github.io/passbolt/passbolt-0.1.0.tgz
+    version: 0.1.0
 generated: 2018-08-10T12:25:28.263652923+02:00
