@@ -14,22 +14,34 @@ passbolt:
     http: 80
     https: 443
   persistence:
-    storageClassName: standard
-    accessModes:
-      - ReadWriteOnce
-    size: 5Gi
+    enabled: true
+    ## database data Persistent Volume Storage Class
+    ## If defined, storageClassName: <storageClass>
+    ## If set to "-", storageClassName: "", which disables dynamic provisioning
+    ## If undefined (the default) or set to null, no storageClassName spec is
+    ##   set, choosing the default provisioner.  (gp2 on AWS, standard on
+    ##   GKE, AWS & OpenStack)
+    ##
+    # storageClass: "-"
+    accessMode: ReadWriteOnce
+    size: 8Gi
+    annotations: {}
   ingress:
+    enabled: false
     # change this to your domain
     host: example.com
     annotations:
-      kubernetes.io/ingress.class: traefik
+      kubernetes.io/ingress.class: nginx
 
 mysql:
   image: mysql
   imageTag: 5.7.21
+  ## Default: random 10 character string
+  # mysqlRootPassword: secret=
+  mysqlUser: passbolt
+  ## Default: random 10 character string
+  # mysqlPassword:
   imagePullPolicy: IfNotPresent
-  ports:
-    mysql: 3306
   resources:
     limits:
       memory: 1Gi
@@ -37,22 +49,16 @@ mysql:
     requests:
       memory: 256Mi
       cpu: 50m
-  readinessProbe:
-    exec:
-      command: ["/probes/ready.sh"]
-    initialDelaySeconds: 30
-    periodSeconds: 5
-  livenessProbe:
-    exec:
-      command: ["/probes/live.sh"]
-    initialDelaySeconds: 60
-    periodSeconds: 10
-    timeoutSeconds: 10
   persistence:
-    storageClassName: standard
-    accessModes:
-      - ReadWriteOnce
-    size: 5Gi
-  # change this for your values
-  rootPassword: secret
-  userPassword: secret
+    enabled: true
+    ## database data Persistent Volume Storage Class
+    ## If defined, storageClassName: <storageClass>
+    ## If set to "-", storageClassName: "", which disables dynamic provisioning
+    ## If undefined (the default) or set to null, no storageClassName spec is
+    ##   set, choosing the default provisioner.  (gp2 on AWS, standard on
+    ##   GKE, AWS & OpenStack)
+    ##
+    # storageClass: "-"
+    accessMode: ReadWriteOnce
+    size: 8Gi
+    annotations: {}

@@ -1,5 +1,15 @@
 apiVersion: v1
-appVersion: "2.1.0-debian"
-description: Passbolt chart with StatefulSet
 name: passbolt
-version: 0.1.0
+version: 0.2.0
+description: Passbolt chart
+keywords:
+  - passbolt
+home: https://github.com/gree-gorey/passbolt
+sources:
+  - https://github.com/passbolt/passbolt_docker
+maintainers:
+  - name: gree-gorey
+    email: ignatyeff.g@yandex.ru
+    url: https://github.com/gree-gorey
+icon: https://raw.githubusercontent.com/gree-gorey/passbolt/master/static/icon.png
+appVersion: "2.1.0-debian"

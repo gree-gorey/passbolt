@@ -1,5 +1,5 @@
-apiVersion: "apps/v1beta1"
-kind: StatefulSet
+apiVersion: apps/v1
+kind: Deployment
 metadata:
   name: {{ template "app.name" . }}
   labels:
@@ -8,7 +8,6 @@ metadata:
     release: {{ .Release.Name }}
     heritage: {{ .Release.Service }}
 spec:
-  serviceName: {{ template "app.name" . }}
   replicas: 1
   selector:
     matchLabels:
@@ -22,6 +21,7 @@ spec:
     spec:
       securityContext:
         fsGroup: 33
+{{- if .Values.passbolt.persistence.enabled }}
       initContainers:
       # copy default img folder's files to a volume
       - name: copy-default-img
@@ -30,6 +30,7 @@ spec:
         volumeMounts:
         - name: data
           mountPath: /data
+{{- end }}
       containers:
       - image: {{ .Values.passbolt.image }}:{{ .Values.passbolt.imageTag }}
         imagePullPolicy: {{ .Values.passbolt.imagePullPolicy }}
@@ -40,9 +41,9 @@ spec:
               command: ["/bin/sh", "-c", "chown -R 33:33 /var/www/passbolt"]
         env:
         - name: DATASOURCES_DEFAULT_HOST
-          value: mysql
+          value: {{ .Release.Name }}-mysql
         - name: DATASOURCES_DEFAULT_USERNAME
-          value: passbolt
+          value: {{ .Values.mysql.mysqlUser }}
         - name: DATASOURCES_DEFAULT_DATABASE
           value: passbolt
         - name: APP_FULL_BASE_URL
@@ -50,8 +51,8 @@ spec:
         - name: DATASOURCES_DEFAULT_PASSWORD
           valueFrom:
             secretKeyRef:
-              name: mysql
-              key: userPassword
+              name: {{ .Release.Name }}-mysql
+              key: mysql-password
         ports:
         - containerPort: {{ .Values.passbolt.ports.http }}
           name: http
@@ -59,6 +60,7 @@ spec:
         - containerPort: {{ .Values.passbolt.ports.https }}
           name: https
           protocol: TCP
+{{- if .Values.passbolt.persistence.enabled }}
         volumeMounts:
         # data volume
         - mountPath: /var/www/passbolt/webroot/img
@@ -73,17 +75,12 @@ spec:
         - mountPath: /etc/ssl/certs/certificate.key
           name: data
           subPath: certificate.key
+{{- end }}
         resources:
 {{ toYaml .Values.passbolt.resources | indent 10 }}
-  volumeClaimTemplates:
-  - metadata:
-      name: data
-    spec:
-      accessModes:
-        {{- range .Values.passbolt.persistence.accessModes }}
-        - {{ . | quote }}
-        {{- end }}
-      resources:
-        requests:
-          storage: {{ .Values.passbolt.persistence.size | quote }}
-      storageClassName: {{ .Values.passbolt.persistence.storageClassName }}
+{{- if .Values.passbolt.persistence.enabled }}
+      volumes:
+      - name: data
+        persistentVolumeClaim:
+          claimName: {{ .Release.Name }}-data
+{{- end -}}

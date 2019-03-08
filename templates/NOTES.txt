@@ -1,0 +1,15 @@
+The Passbolt server can be accessed via port {{ .Values.passbolt.ports.https }} on the following DNS name from within your cluster:
+{{ template "app.name" . }}.{{ .Release.Namespace }}.svc.cluster.local
+
+{{ if .Values.passbolt.ingress.enabled -}}
+From outside the cluster, the Passbolt URL is:
+https://{{ .Values.passbolt.ingress.host }}
+{{- end }}
+
+{{- if .Values.passbolt.persistence.enabled }}
+{{- else }}
+#################################################################################
+######   WARNING: Persistence is disabled!!! You will lose your data when   #####
+######            the Server pod is terminated.                             #####
+#################################################################################
+{{- end }}
