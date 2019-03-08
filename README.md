@@ -13,6 +13,11 @@ Install passbolt:
 ```console
 helm install passbolt/passbolt --name=my-passbolt-release
 ```
+or if you prefer `kubectl`:
+```console
+helm fetch --untar passbolt/passbolt
+helm template passbolt --name=my-passbolt-release | kubectl apply -f -
+```
 
 ### 2. Using source github code
 Clone/download source code:
