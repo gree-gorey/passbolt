@@ -35,10 +35,11 @@ The following table lists the configurable parameters of the Passbolt chart and 
 
 Parameter | Description | Default
 --------- | ----------- | -------
-`passbolt.persistence.size` | size of volume for `passbolt` pod | `5Gi`
+`passbolt.persistence.enabled` | if persistence enabled for server | `true`
+`passbolt.persistence.size` | size of volume for `passbolt` pod | `8Gi`
+`passbolt.ingress.enabled` | if ingress enabled for server | `true`
 `passbolt.ingress.host` | domain name for ingress resource | `example.com`
-`mysql.persistence.size` | size of volume for `mysql` pod | `5Gi`
-`mysql.rootPassword` | root password for `mysql`, plain | `secret`
-`mysql.userPassword` | user password for `mysql`, plain | `secret`
+`mysql.persistence.enabled` | if persistence enabled for mysql | `true`
+`mysql.persistence.size` | size of volume for `mysql` pod | `8Gi`
 
 See all available values in [values.yaml](https://github.com/gree-gorey/passbolt/blob/master/values.yaml)
