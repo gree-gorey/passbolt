@@ -2,12 +2,31 @@ apiVersion: v1
 entries:
   passbolt:
   - apiVersion: v1
-    appVersion: "2.1.0-debian"
-    created: 2018-08-10T12:25:28.265241249+02:00
+    appVersion: 2.1.0-debian
+    created: 2019-03-08T11:37:49.359680108+01:00
     description: Passbolt chart with StatefulSet
-    digest: 3a9c70c3187ac9d652bdf861eb9f97e9e2fd9f87e7911ecca8b287ebeb57b7e6
+    digest: e89891a2effea42cb632cf88d0589151772deb8560d4dfa001f915f4c65406c0
     name: passbolt
     urls:
     - https://gree-gorey.github.io/passbolt/passbolt-0.1.0.tgz
     version: 0.1.0
-generated: 2018-08-10T12:25:28.263652923+02:00
+  - apiVersion: v1
+    appVersion: 2.1.0-debian
+    created: 2019-03-08T11:37:49.363559188+01:00
+    description: Passbolt chart
+    digest: 2efc7ce66e4f855f8a90bb12023074b6590e8dfe8511985fc5b1f928557a7091
+    home: https://github.com/gree-gorey/passbolt
+    icon: https://raw.githubusercontent.com/gree-gorey/passbolt/master/static/icon.png
+    keywords:
+    - passbolt
+    maintainers:
+    - email: ignatyeff.g@yandex.ru
+      name: gree-gorey
+      url: https://github.com/gree-gorey
+    name: passbolt
+    sources:
+    - https://github.com/passbolt/passbolt_docker
+    urls:
+    - https://gree-gorey.github.io/passbolt/passbolt-0.2.0.tgz
+    version: 0.2.0
+generated: 2019-03-08T11:37:49.357927738+01:00
