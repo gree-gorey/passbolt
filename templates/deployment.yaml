@@ -26,7 +26,14 @@ spec:
       # copy default img folder's files to a volume
       - name: copy-default-img
         image: {{ .Values.passbolt.image }}:{{ .Values.passbolt.imageTag }}
-        command: ["sh", "-c", "mkdir -p /data/img && mkdir -p /data/gpg && cp -r /var/www/passbolt/webroot/img/* /data/img/"]
+        command:
+        - "sh"
+        - "-c"
+        - mkdir -p /data/img &&
+          mkdir -p /data/gpg &&
+          mkdir -p /data/certs &&
+          cp -r /var/www/passbolt/webroot/img/* /data/img/ &&
+          cp -r /etc/ssl/certs/* /data/certs/
         volumeMounts:
         - name: data
           mountPath: /data
@@ -38,7 +45,10 @@ spec:
         lifecycle:
           postStart:
             exec:
-              command: ["/bin/sh", "-c", "chown -R 33:33 /var/www/passbolt"]
+              command:
+              - "/bin/sh"
+              - "-c"
+              - "chown -R 33:33 /var/www/passbolt"
         env:
         - name: DATASOURCES_DEFAULT_HOST
           value: {{ .Release.Name }}-mysql
@@ -69,12 +79,9 @@ spec:
         - mountPath: /var/www/passbolt/config/gpg
           name: data
           subPath: gpg
-        - mountPath: /etc/ssl/certs/certificate.crt
+        - mountPath: /etc/ssl/certs
           name: data
-          subPath: certificate.crt
-        - mountPath: /etc/ssl/certs/certificate.key
-          name: data
-          subPath: certificate.key
+          subPath: certs
 {{- end }}
         resources:
 {{ toYaml .Values.passbolt.resources | indent 10 }}
