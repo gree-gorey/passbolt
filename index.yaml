@@ -3,7 +3,7 @@ entries:
   passbolt:
   - apiVersion: v1
     appVersion: "1.0"
-    created: 2019-05-16T10:51:35.041989883+02:00
+    created: 2019-05-16T10:53:48.473432924+02:00
     description: Passbolt chart with StatefulSet
     digest: e89891a2effea42cb632cf88d0589151772deb8560d4dfa001f915f4c65406c0
     name: passbolt
@@ -12,7 +12,7 @@ entries:
     version: 2.1.0-debian
   - apiVersion: v1
     appVersion: 2.1.0-debian
-    created: 2019-05-16T10:51:35.06575355+02:00
+    created: 2019-05-16T10:53:48.491616221+02:00
     description: Passbolt chart
     digest: f23eca94ae357a2bfec8eb2044846a32126153e82072c9fb19b6a3cc2b787607
     home: https://github.com/gree-gorey/passbolt
@@ -31,7 +31,7 @@ entries:
     version: 0.2.2
   - apiVersion: v1
     appVersion: 2.1.0-debian
-    created: 2019-05-16T10:51:35.054347762+02:00
+    created: 2019-05-16T10:53:48.48388568+02:00
     description: Passbolt chart
     digest: 8606b8a661f20832a6ce2bc5c17d83541f0526b5882458e683d8bed34ff009f1
     home: https://github.com/gree-gorey/passbolt
@@ -50,7 +50,7 @@ entries:
     version: 0.2.1
   - apiVersion: v1
     appVersion: 2.1.0-debian
-    created: 2019-05-16T10:51:35.046504238+02:00
+    created: 2019-05-16T10:53:48.477501111+02:00
     description: Passbolt chart
     digest: 2efc7ce66e4f855f8a90bb12023074b6590e8dfe8511985fc5b1f928557a7091
     home: https://github.com/gree-gorey/passbolt
@@ -67,4 +67,4 @@ entries:
     urls:
     - https://gree-gorey.github.io/passbolt/passbolt-0.2.0.tgz
     version: 0.2.0
-generated: 2019-05-16T10:51:35.0402802+02:00
+generated: 2019-05-16T10:53:48.471664329+02:00
