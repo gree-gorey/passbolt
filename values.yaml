@@ -41,6 +41,7 @@ mysql:
   mysqlUser: passbolt
   ## Default: random 10 character string
   # mysqlPassword:
+  mysqlDatabase: passbolt
   imagePullPolicy: IfNotPresent
   resources:
     limits:
