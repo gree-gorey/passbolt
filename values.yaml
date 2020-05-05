@@ -1,7 +1,7 @@
 passbolt:
   replicaCount: 1
   image: passbolt/passbolt
-  imageTag: 2.1.0-debian
+  imageTag: 2.12.0-debian
   imagePullPolicy: IfNotPresent
   resources:
     limits:
@@ -35,7 +35,7 @@ passbolt:
 
 mysql:
   image: mysql
-  imageTag: 5.7.21
+  imageTag: 5.7
   ## Default: random 10 character string
   # mysqlRootPassword: secret=
   mysqlUser: passbolt
